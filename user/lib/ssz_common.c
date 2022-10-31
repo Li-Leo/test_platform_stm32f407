@@ -17,6 +17,11 @@
 /************************************************
 * Function 
 ************************************************/
+void ssz_mem_zero(void* buff, int buff_size)
+{
+	memset(buff, 0, buff_size);
+}
+
 
 //check if the tmp buff is >=alloc_size
 // void ssz_tmp_buff_check_size(TempAllocBuffType alloc_type, int alloc_size)

@@ -22,18 +22,18 @@
 
 /* Exported macro --------------------------------------------------------------------*/
 /* 接收一字节数据回调函数 */
-typedef void (*DriverRecieveHandle)(void *Sem);
+typedef void (*com_recieve_semaphore_sync_handler)(void *Sem);
 
 /* ch is the received byte */
-typedef int (*MidComReceiveHandler)(uint8_t ch);
+typedef int (*com_recieve_one_byte_handler)(uint8_t ch);
 
 typedef struct
 {
     uint8_t buffer[48];                        //数据缓存区
     SszSafeQueue com_recv_queue;               //数据缓存队列
-    DriverRecieveHandle DriRecieveHandleFunc;  //接收一字节数据同步回调函数
-    MidComReceiveHandler ComReceiveHandleFunc; //接收一字节数据处理回调函数
-    void *SemID;
+    com_recieve_semaphore_sync_handler com_recieve_semaphore_sync_cb;  //接收一字节数据同步回调函数
+    com_recieve_one_byte_handler com_recieve_one_byte_cb; //接收一字节数据处理回调函数
+    void *semaphore;
     void *obj;
 } struct_com_t;
 
@@ -47,11 +47,11 @@ typedef enum
 
 /* Exported functions prototypes -----------------------------------------------------*/
 bool uart_send(void *obj, const void *buff, int buff_size);
-void mid_com_init(enum_com_id com_id, void *sem, DriverRecieveHandle handler1, MidComReceiveHandler handler2);
+void mid_com_init(enum_com_id com_id, void *sem, com_recieve_semaphore_sync_handler handler1, com_recieve_one_byte_handler handler2);
 
 /* 一字节数据接收处理函数 */
 void com_handle_new_received_data(enum_com_id com_id);
-struct_com_t *getDrvComInfo(enum_com_id com_id);
+struct_com_t *get_com_info(enum_com_id com_id);
 
 /* Enddefine to prevent recursive inclusion ------------------------------------------*/
 #endif /* __MID_COM_H */

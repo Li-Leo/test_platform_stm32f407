@@ -9,6 +9,7 @@
 #include "stdbool.h"
 #include "ssz_tick_time.h" 
 #include "lib/ssz_time_utility.h"
+#include "main.h"
 
 /************************************************
 * Declaration

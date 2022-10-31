@@ -10,7 +10,11 @@
 			"shell_port.h": "c",
 			"cmsis_os2.h": "c",
 			"shell.h": "c",
-			"log.h": "c"
+			"log.h": "c",
+			"stdint.h": "c",
+			"main.h": "c",
+			"stdbool.h": "c",
+			"key.h": "c"
 		}
 	}
 }

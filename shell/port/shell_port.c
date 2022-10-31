@@ -80,10 +80,10 @@ int userShellUnlock(Shell *shell)
     return 0;
 }
 
-void pc_uart_receive_sem(void *Sem)
+void pc_uart_receive_semaphore_sync(void *sem)
 {
    //发送同步信号量，同步数据处理任务
-	if (osSemaphoreRelease(Sem) != osOK ) {
+	if (osSemaphoreRelease(sem) != osOK ) {
 		;//ssz_traceln("Sem release fail.\n", com_id, ch);//错误处理
     }
 }
@@ -118,10 +118,9 @@ void userShellInit(void)
         logError("pc_uart_semaphore created\n");
     }
 
-    mid_com_init(k_ComPCUart, pc_uart_semaphore, pc_uart_receive_sem, pc_comm_receive_byte_cb);
+    mid_com_init(k_ComPCUart, pc_uart_semaphore, pc_uart_receive_semaphore_sync, pc_comm_receive_byte_cb);
 
-    if (xTaskCreate(shellTask, "shell", 256, &shell, 5, NULL) != pdPASS)
-    {
+    if (xTaskCreate(shellTask, "shell", 256, &shell, 5, NULL) != pdPASS) {
         logError("shell task creat failed");
     }
 }

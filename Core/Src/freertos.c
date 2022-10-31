@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "log.h"
 #include "shell_port.h"
+#include "key.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,6 +64,10 @@ const osThreadAttr_t defaultTask_attributes = {
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 void timer_callback(void *parameter);
+void key2_pressed(KeyID key, int repeat_count);
+void key3_pressed(KeyID key, int repeat_count);
+void key4_released(KeyID key, int repeat_count);
+
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
@@ -88,6 +93,12 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
+  key_init();
+  osTimerId_t key_scan_timer_id = osTimerNew(key_start_scan, osTimerPeriodic, NULL, NULL);
+  osTimerStart(key_scan_timer_id, KEY_SCAN_TIME_MS);
+  key_set_handler(kKey2, kKeyEventPressed, key2_pressed);
+  key_set_handler(kKey3, kKeyEventPressed, key3_pressed);
+  key_set_handler(kKey4, kKeyEventReleased, key4_released);
   /* USER CODE END RTOS_TIMERS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -125,7 +136,7 @@ void StartDefaultTask(void *argument)
   {
     osDelay(1000);
     HAL_GPIO_WritePin(LED0_GPIO_Port, LED0_Pin, GPIO_PIN_RESET);
-    osTimerStart(timer_id, 15);
+    osTimerStart(timer_id, 30);
     // logDebug("tick = %d", HAL_GetTick());
   }
   /* USER CODE END StartDefaultTask */
@@ -137,5 +148,22 @@ void timer_callback(void *argument)
 {
     HAL_GPIO_WritePin(LED0_GPIO_Port, LED0_Pin, GPIO_PIN_SET);
 }
+
+void key2_pressed(KeyID key, int repeat_count)
+{
+    HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+}
+
+void key3_pressed(KeyID key, int repeat_count)
+{
+    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+}
+
+void key4_released(KeyID key, int repeat_count)
+{
+    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+}
+
+
 /* USER CODE END Application */
 
