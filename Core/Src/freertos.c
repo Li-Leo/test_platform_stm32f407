@@ -164,6 +164,12 @@ void key4_released(KeyID key, int repeat_count)
     HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
 }
 
+void print_tick(void)
+{
+    logDebug("tick = %d", HAL_GetTick());
+}
+
+SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), print_tick, print_tick, print current tick);
 
 /* USER CODE END Application */
 
