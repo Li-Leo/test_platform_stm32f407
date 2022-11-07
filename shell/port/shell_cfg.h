@@ -97,7 +97,7 @@
 /**
  * @brief 历史命令记录数量
  */
-#define     SHELL_HISTORY_MAX_NUMBER    5
+#define     SHELL_HISTORY_MAX_NUMBER    10
 
 /**
  * @brief 双击间隔(ms)

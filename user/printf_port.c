@@ -28,10 +28,19 @@ struct __FILE
 
 FILE __stdout;
 
+void print_char(char c)
+{
+    HAL_UART_Transmit(uart, (uint8_t *) (&c), 1, 1);
+}
+
 int fputc(int ch, FILE *f)
 {
-    uint8_t temp[1]={ch};
-    HAL_UART_Transmit(uart, temp, 1, 10);
+    // uint8_t temp[1]={ch};
+    if (ch == '\n') {
+        print_char('\r');
+    }
+
+    print_char(ch);
     
     return 0;
 }
