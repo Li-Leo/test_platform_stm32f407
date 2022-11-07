@@ -1455,6 +1455,11 @@
               <FileType>1</FileType>
               <FilePath>..\user\data_db.c</FilePath>
             </File>
+            <File>
+              <FileName>drv_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\drv_gpio.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

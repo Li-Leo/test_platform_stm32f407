@@ -62,7 +62,7 @@ static fdb_time_t get_time1(void)
     return (int32_t)ssz_tick_time_now();
 }
 
-int flash_db_test(void)
+int flash_db_init(void)
 {
     fdb_err_t result;
 
@@ -135,7 +135,7 @@ int flash_db_test(void)
 
 
         /* run TSDB sample */
-        tsdb_sample(&tsdb);
+        // tsdb_sample(&tsdb);
     }
 #endif /* FDB_USING_TSDB */
     return 0;

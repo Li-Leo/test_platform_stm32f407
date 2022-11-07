@@ -15,7 +15,9 @@
 			"main.h": "c",
 			"stdbool.h": "c",
 			"key.h": "c",
-			"string.h": "c"
+			"string.h": "c",
+			"drv_gpio.h": "c",
+			"flash.h": "c"
 		}
 	}
 }

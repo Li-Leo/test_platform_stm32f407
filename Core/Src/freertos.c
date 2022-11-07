@@ -28,6 +28,7 @@
 #include "log.h"
 #include "shell_port.h"
 #include "key.h"
+#include "drv_gpio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,6 +68,7 @@ void timer_callback(void *parameter);
 void key2_pressed(KeyID key, int repeat_count);
 void key3_pressed(KeyID key, int repeat_count);
 void key4_released(KeyID key, int repeat_count);
+int flash_db_init(void);
 
 /* USER CODE END FunctionPrototypes */
 
@@ -112,7 +114,7 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
     userShellInit();
-    flash_db_test();
+    flash_db_init();
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -136,7 +138,7 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
     osDelay(1000);
-    HAL_GPIO_WritePin(LED0_GPIO_Port, LED0_Pin, GPIO_PIN_RESET);
+    drv_gpio_set_pin_low(LED0_GPIO_Port, LED0_Pin);
     osTimerStart(timer_id, 30);
     // logDebug("tick = %d", HAL_GetTick());
   }
@@ -147,22 +149,22 @@ void StartDefaultTask(void *argument)
 /* USER CODE BEGIN Application */
 void timer_callback(void *argument)
 {
-    HAL_GPIO_WritePin(LED0_GPIO_Port, LED0_Pin, GPIO_PIN_SET);
+    drv_gpio_set_pin_high(LED0_GPIO_Port, LED0_Pin);
 }
 
 void key2_pressed(KeyID key, int repeat_count)
 {
-    HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+    drv_gpio_toggle_pin(LED1_GPIO_Port, LED1_Pin);
 }
 
 void key3_pressed(KeyID key, int repeat_count)
 {
-    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+    drv_gpio_toggle_pin(LED2_GPIO_Port, LED2_Pin);
 }
 
 void key4_released(KeyID key, int repeat_count)
 {
-    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+    drv_gpio_toggle_pin(LED2_GPIO_Port, LED2_Pin);
 }
 
 void print_tick(void)

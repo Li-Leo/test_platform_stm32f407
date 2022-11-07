@@ -29,6 +29,7 @@
 #include "log.h"
 #include "stdio.h"
 #include "flash.h"
+#include "drv_gpio.h"
 
 /* USER CODE END Includes */
 
@@ -93,8 +94,8 @@ int main(void)
     MX_USART1_UART_Init();
     MX_SPI1_Init();
     /* USER CODE BEGIN 2 */
-    HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
+    drv_gpio_set_pin_high(LED2_GPIO_Port, LED2_Pin);
+    drv_gpio_set_pin_high(LED1_GPIO_Port, LED1_Pin);
 
     /* SFUD initialize */
     if (sfud_init() == SFUD_SUCCESS) {

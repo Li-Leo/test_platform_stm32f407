@@ -31,6 +31,7 @@
 #include <stdint.h>
 #include "main.h"
 #include "spi.h"
+#include "drv_gpio.h"
 
 static char log_buf[256];
 /* Flash对应的SPI接口 */
@@ -56,7 +57,7 @@ static sfud_err spi_write_read(const sfud_spi *spi_dev, const uint8_t *write_buf
 
 	//if both write size and read size are not equal zero, do write and read.
 	if (write_size && read_size) {
-        HAL_GPIO_WritePin(FLASH_CS_GPIO_Port, FLASH_CS_Pin, GPIO_PIN_RESET);
+        drv_gpio_set_pin_low(FLASH_CS_GPIO_Port, FLASH_CS_Pin);
         if (HAL_SPI_Transmit(spi, (uint8_t *)write_buf, write_size, HAL_MAX_DELAY) == HAL_OK) {
             ;
         }
@@ -64,27 +65,27 @@ static sfud_err spi_write_read(const sfud_spi *spi_dev, const uint8_t *write_buf
         if(HAL_SPI_Receive(spi , (uint8_t *)read_buf, read_size, HAL_MAX_DELAY) == HAL_OK) {
             ;
         }
-        HAL_GPIO_WritePin(FLASH_CS_GPIO_Port, FLASH_CS_Pin, GPIO_PIN_SET);
+        drv_gpio_set_pin_high(FLASH_CS_GPIO_Port, FLASH_CS_Pin);
 
         // SFUD_INFO("spi write and read data.");
     } else if (write_size) {
-        HAL_GPIO_WritePin(FLASH_CS_GPIO_Port, FLASH_CS_Pin, GPIO_PIN_RESET);
+        drv_gpio_set_pin_low(FLASH_CS_GPIO_Port, FLASH_CS_Pin);
 
         if (HAL_SPI_Transmit(spi, (uint8_t *)write_buf, write_size, HAL_MAX_DELAY) == HAL_OK) {
             ;
         }
 
-        HAL_GPIO_WritePin(FLASH_CS_GPIO_Port, FLASH_CS_Pin, GPIO_PIN_SET);
+        drv_gpio_set_pin_high(FLASH_CS_GPIO_Port, FLASH_CS_Pin);
 
 		// SFUD_INFO("spi write data.");
 	} else if (read_size) {
-        HAL_GPIO_WritePin(FLASH_CS_GPIO_Port, FLASH_CS_Pin, GPIO_PIN_RESET);
+        drv_gpio_set_pin_low(FLASH_CS_GPIO_Port, FLASH_CS_Pin);
 
         if (HAL_SPI_Receive(spi , (uint8_t *)read_buf, read_size, HAL_MAX_DELAY) == HAL_OK) {
 
         }
 
-        HAL_GPIO_WritePin(FLASH_CS_GPIO_Port, FLASH_CS_Pin, GPIO_PIN_SET);
+        drv_gpio_set_pin_high(FLASH_CS_GPIO_Port, FLASH_CS_Pin);
         // SFUD_INFO("spi read data.");
     } else {
         ;          
@@ -163,7 +164,7 @@ sfud_err sfud_spi_port_init(sfud_flash *flash) {
      */
     switch (flash->index) {
         case SFUD_W25Q128JV_DEVICE_INDEX: {
-            HAL_GPIO_WritePin(FLASH_CS_GPIO_Port, FLASH_CS_Pin, GPIO_PIN_SET);
+            drv_gpio_set_pin_high(FLASH_CS_GPIO_Port, FLASH_CS_Pin);
 
             /* 同步 Flash 移植所需的接口及数据 */
             flash->spi.wr = spi_write_read;
