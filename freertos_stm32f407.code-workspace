@@ -18,7 +18,9 @@
 			"string.h": "c",
 			"drv_gpio.h": "c",
 			"flash.h": "c",
-			"dac.h": "c"
+			"dac.h": "c",
+			"ssz_time_utility.h": "c",
+			"mid_adc.h": "c"
 		}
 	}
 }

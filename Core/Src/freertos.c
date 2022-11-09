@@ -26,9 +26,12 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "log.h"
+#include "shell.h"
 #include "shell_port.h"
 #include "key.h"
 #include "drv_gpio.h"
+#include "flash.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -113,8 +116,11 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-    userShellInit();
+    drv_gpio_set_pin_high(LED2_GPIO_Port, LED2_Pin);
+    drv_gpio_set_pin_high(LED1_GPIO_Port, LED1_Pin);
+    sfud_init();
     flash_db_init();
+    userShellInit();
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */

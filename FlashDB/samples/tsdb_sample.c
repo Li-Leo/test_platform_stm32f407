@@ -37,12 +37,12 @@ static bool set_status_cb(fdb_tsl_t tsl, void *arg);
 
 void tsdb_sample(fdb_tsdb_t tsdb)
 {
-    struct fdb_blob blob;
+    // struct fdb_blob blob;
 
     FDB_INFO("==================== tsdb_sample ====================\n");
 
     { /* APPEND new TSL (time series log) */
-        struct env_status status;
+        // struct env_status status;
 
         /* append new log to TSDB */
     //     status.temp = 36;

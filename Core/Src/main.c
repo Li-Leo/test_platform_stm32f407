@@ -19,18 +19,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "adc.h"
 #include "dac.h"
+#include "i2c.h"
 #include "spi.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "shell_port.h"
-#include "log.h"
-#include "stdio.h"
-#include "flash.h"
-#include "drv_gpio.h"
 
 /* USER CODE END Includes */
 
@@ -95,14 +92,10 @@ int main(void)
   MX_USART1_UART_Init();
   MX_SPI1_Init();
   MX_DAC_Init();
+  MX_I2C1_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
-    drv_gpio_set_pin_high(LED2_GPIO_Port, LED2_Pin);
-    drv_gpio_set_pin_high(LED1_GPIO_Port, LED1_Pin);
 
-    /* SFUD initialize */
-    if (sfud_init() == SFUD_SUCCESS) {
-        // sfud_demo(0, sizeof(sfud_demo_test_buf), sfud_demo_test_buf);
-    }
   /* USER CODE END 2 */
 
   /* Init scheduler */

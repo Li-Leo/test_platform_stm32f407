@@ -49,6 +49,7 @@ typedef struct
 
 typedef DateStruct SszDate;
 typedef TimeStruct SszTime;
+typedef DateTimeStruct date_time;
 
 
 #ifdef __cplusplus

@@ -151,7 +151,7 @@
 /**
  * @brief 是否显示shell信息
  */
-#define     SHELL_SHOW_INFO             1
+#define     SHELL_SHOW_INFO             0
 
 /**
  * @brief 是否在登录后清除命令行
@@ -161,7 +161,7 @@
 /**
  * @brief shell默认用户
  */
-#define     SHELL_DEFAULT_USER          "shell"
+#define     SHELL_DEFAULT_USER          "alfa"
 
 /**
  * @brief shell默认用户密码
