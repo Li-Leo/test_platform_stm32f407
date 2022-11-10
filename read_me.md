@@ -31,7 +31,7 @@ All devices offer three 12-bit ADCs, two DACs, a low-power RTC, twelve general-p
 - up to 24 channels and 7.2 MSPS in triple interleaved mode
 2×12-bit D/A converters
 
-## General-purpose DMA 
+### General-purpose DMA 
 16-stream DMA controller with FIFOs and burst support
 
 ### Up to 17 timers 
