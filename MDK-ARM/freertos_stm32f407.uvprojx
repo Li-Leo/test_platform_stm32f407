@@ -2030,6 +2030,11 @@
               <FileType>1</FileType>
               <FilePath>..\user\mid_adc.c</FilePath>
             </File>
+            <File>
+              <FileName>thread.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\thread.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

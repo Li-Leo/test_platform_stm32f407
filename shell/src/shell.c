@@ -1192,7 +1192,7 @@ unsigned int shellRunCommand(Shell *shell, ShellCommand *command)
                                                  shell->parser.param);
         if (!command->attr.attrs.disableReturn)
         {
-            shellWriteReturnValue(shell, returnValue);
+            // shellWriteReturnValue(shell, returnValue);
         }
     }
     else if (command->attr.attrs.type == SHELL_TYPE_CMD_FUNC)
@@ -1203,7 +1203,7 @@ unsigned int shellRunCommand(Shell *shell, ShellCommand *command)
                                   shell->parser.param);
         if (!command->attr.attrs.disableReturn)
         {
-            shellWriteReturnValue(shell, returnValue);
+            // shellWriteReturnValue(shell, returnValue);
         }
     }
     else if (command->attr.attrs.type >= SHELL_TYPE_VAR_INT
