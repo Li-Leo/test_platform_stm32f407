@@ -32,6 +32,7 @@
 #include "drv_gpio.h"
 #include "flash.h"
 #include "thread.h"
+#include "rtc.h"
 
 /* USER CODE END Includes */
 
@@ -57,6 +58,8 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 osTimerId_t timer_id;
+uint32_t g_click_interval_s = 10;
+
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -93,6 +96,7 @@ void MX_FREERTOS_Init(void) {
   userShellInit();
   drv_gpio_set_pin_high(LED2_GPIO_Port, LED2_Pin);
   drv_gpio_set_pin_high(LED1_GPIO_Port, LED1_Pin);
+  drv_gpio_set_pin_high(LED0_GPIO_Port, LED0_Pin);
   key_set_handler(kKey2, kKeyEventPressed, key2_pressed);
   key_set_handler(kKey3, kKeyEventPressed, key3_pressed);
   key_set_handler(kKey4, kKeyEventReleased, key4_released);
@@ -148,9 +152,10 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1000);
-    drv_gpio_set_pin_low(LED0_GPIO_Port, LED0_Pin);
-    osTimerStart(timer_id, 30);
+    osDelay(g_click_interval_s * 1000ul);
+    // drv_gpio_set_pin_low(LED0_GPIO_Port, LED0_Pin);
+    drv_gpio_set_pin_high(PB_11_GPIO_Port, PB_11_Pin);
+    osTimerStart(timer_id, 50);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -159,7 +164,8 @@ void StartDefaultTask(void *argument)
 /* USER CODE BEGIN Application */
 void timer_callback(void *argument)
 {
-    drv_gpio_set_pin_high(LED0_GPIO_Port, LED0_Pin);
+    // drv_gpio_set_pin_high(LED0_GPIO_Port, LED0_Pin);
+    drv_gpio_set_pin_low(PB_11_GPIO_Port, PB_11_Pin);
 }
 
 void key2_pressed(KeyID key, int repeat_count)
@@ -185,11 +191,72 @@ void key4_released(KeyID key, int repeat_count)
     osEventFlagsSet(event_thread_handle, KEY4_FLAG);
 }
 
+
+void time(void)
+{
+  if (HAL_RTC_GetTime(&hrtc, &ctime, RTC_FORMAT_BIN) == HAL_OK) {
+    logDebug("time: %02d:%02d:%02d", ctime.Hours, ctime.Minutes, ctime.Seconds);
+  }
+
+  if (HAL_RTC_GetDate(&hrtc, &date_buff, RTC_FORMAT_BIN) == HAL_OK) {
+    logDebug("date: %02d/%02d/%02d/%02d", 2000 + date_buff.Year, date_buff.Month, date_buff.Date,date_buff.WeekDay);
+  }
+}
+
 void print_tick(void)
 {
-    // logDebug("tick = %d", HAL_GetTick());
-    logDebug("tick = %dms, %d:%d:%d:%d", HAL_GetTick(), HAL_GetTick() / 1000 / 3600, 
-            HAL_GetTick() / 1000 % 3600 / 60, HAL_GetTick() / 1000 % 60, HAL_GetTick() % 1000);
+  // logDebug("tick = %d", HAL_GetTick());
+  logDebug("tick = %dms, %d:%d:%d:%d", HAL_GetTick(), HAL_GetTick() / 1000 / 3600, 
+    HAL_GetTick() / 1000 % 3600 / 60, HAL_GetTick() / 1000 % 60, HAL_GetTick() % 1000);
+  time();
+}
+
+
+void set_time(uint8_t hour, uint8_t minute, uint8_t second)
+{
+  RTC_TimeTypeDef sTime = {0};
+  
+  sTime.Hours = hour;
+  sTime.Minutes = minute;
+  sTime.Seconds = second;
+  sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+  sTime.StoreOperation = RTC_STOREOPERATION_RESET;
+
+  if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  logDebug("set time done!");
+}
+
+void set_date(uint8_t year, uint8_t month, uint8_t date, uint8_t week_day)
+{
+  RTC_DateTypeDef sDate = {0};
+  
+  sDate.WeekDay = week_day;
+  sDate.Month = month;
+  sDate.Date = date;
+  sDate.Year = year;
+
+  if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  logDebug("set date done!");
+}
+
+void set_datetime(uint8_t year, uint8_t month, uint8_t date, uint8_t week_day, uint8_t hour, uint8_t minute, uint8_t second)
+{
+  set_time(hour, minute, second);
+  set_date(year, month, date, week_day);
+  logDebug("datetime set done!");
+}
+
+void write_rtc_backup_year(uint8_t year)
+{
+  HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR2, year);
 }
 
 void kernel_ver(void)
@@ -200,7 +267,25 @@ void kernel_ver(void)
     logDebug("kernel_ver = %s", kernel_id);
 }
 
+void click_interval_set(uint32_t second)
+{
+  g_click_interval_s = second;
+  logDebug("set g_click_interval_s=%lu", g_click_interval_s);
+}
+
+void click_interval_read(void)
+{
+  logDebug("g_click_interval_s=%lu", g_click_interval_s);
+}
+
 SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), tick, print_tick, print current tick);
+SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), time, time, datetime);
+SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), set_time, set_time, set time [h] [m] [s]);
+SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), set_date, set_date, set date [y] [m] [d] [w]);
+SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), set_datetime, set_datetime, set date [y] [m] [d] [w] [h] [m] [s]);
+SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), write_rtc_backup_year, write_rtc_backup_year, write_rtc_backup_year);
+SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), click_interval_set, click_interval_set, click_interval_set);
+SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), click_interval_read, click_interval_read, click_interval_read);
 SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), kernel_ver, kernel_ver, kernel_ver);
 
 /* USER CODE END Application */
