@@ -33,6 +33,7 @@
 #include "flash.h"
 #include "thread.h"
 #include "rtc.h"
+#include "ssz_time.h"
 
 /* USER CODE END Includes */
 
@@ -60,6 +61,9 @@
 osTimerId_t timer_id;
 uint32_t g_click_interval_s = 10;
 
+osTimerId_t g_check_destination_timer_id;
+date_time g_expect_datetime;
+
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -72,6 +76,7 @@ const osThreadAttr_t defaultTask_attributes = {
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 void timer_callback(void *parameter);
+void check_timer_callback(void *parameter);
 void key2_pressed(KeyID key, int repeat_count);
 void key3_pressed(KeyID key, int repeat_count);
 void key4_released(KeyID key, int repeat_count);
@@ -115,6 +120,9 @@ void MX_FREERTOS_Init(void) {
   osTimerId_t key_scan_timer_id = osTimerNew(key_start_scan, osTimerPeriodic, NULL, NULL);
   osTimerStart(key_scan_timer_id, KEY_SCAN_TIME_MS);
 
+  g_check_destination_timer_id = osTimerNew(check_timer_callback, osTimerPeriodic, NULL, NULL);
+  osTimerStart(g_check_destination_timer_id, 1000);
+
   /* USER CODE END RTOS_TIMERS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -148,7 +156,7 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
-  osTimerId_t timer_id = osTimerNew(timer_callback, osTimerOnce, NULL, NULL);
+  timer_id = osTimerNew(timer_callback, osTimerOnce, NULL, NULL);
   /* Infinite loop */
   for(;;)
   {
@@ -278,6 +286,41 @@ void click_interval_read(void)
   logDebug("g_click_interval_s=%lu", g_click_interval_s);
 }
 
+void check_timer_callback(void *parameter)
+{
+  time();
+
+  if (date_buff.Month == g_expect_datetime.month
+      && date_buff.Date == g_expect_datetime.day
+      && ctime.Hours == g_expect_datetime.hour
+      && ctime.Minutes == g_expect_datetime.minute) {
+        osThreadSuspend(defaultTaskHandle);
+        osTimerStop(timer_id);
+        osTimerStop(g_check_destination_timer_id);
+        drv_gpio_set_pin_low(PB_11_GPIO_Port, PB_11_Pin);
+
+        logDebug("stop screen click");
+  }
+}
+
+void set_destination_datetime(uint8_t month, uint8_t day, uint8_t hour, uint8_t minute)
+{
+  g_expect_datetime.month = month;
+  g_expect_datetime.day = day;
+  g_expect_datetime.hour = hour;
+  g_expect_datetime.minute = minute;
+
+  logDebug("set g_expect_datetime.month  = %u,  g_expect_datetime.day = %u,  g_expect_datetime.hour  = %u,  g_expect_datetime.minute = %u",
+      g_expect_datetime.month,  g_expect_datetime.day,  g_expect_datetime.hour,  g_expect_datetime.minute);
+}
+
+void get_destination_datetime(uint8_t month, uint8_t day, uint8_t hour, uint8_t minute)
+{
+
+  logDebug("g_expect_datetime.month  = %u,  g_expect_datetime.day = %u,  g_expect_datetime.hour  = %u,  g_expect_datetime.minute = %u",
+      g_expect_datetime.month,  g_expect_datetime.day,  g_expect_datetime.hour,  g_expect_datetime.minute);
+}
+
 SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), tick, print_tick, print current tick);
 SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), time, time, datetime);
 SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), set_time, set_time, set time [h] [m] [s]);
@@ -287,6 +330,9 @@ SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), wr
 SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), click_interval_set, click_interval_set, click_interval_set);
 SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), click_interval_read, click_interval_read, click_interval_read);
 SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), kernel_ver, kernel_ver, kernel_ver);
+
+SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), set_destination_datetime, set_destination_datetime, set_destination_datetime );
+SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), get_destination_datetime, get_destination_datetime, get_destination_datetime);
 
 /* USER CODE END Application */
 
