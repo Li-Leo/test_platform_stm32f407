@@ -20,7 +20,8 @@
 			"flash.h": "c",
 			"dac.h": "c",
 			"ssz_time_utility.h": "c",
-			"mid_adc.h": "c"
+			"mid_adc.h": "c",
+			"led_tm1652.h": "c"
 		}
 	}
 }
