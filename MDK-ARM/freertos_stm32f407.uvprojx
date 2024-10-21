@@ -10,7 +10,7 @@
       <TargetName>freertos_stm32f407</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../shell/log;../shell/port;../shell/src;../user/lib;../user;../sfud/inc;../FlashDB/port/fal/inc;../FlashDB/inc</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../shell/log;../shell/port;../shell/src;../user/lib;../user;../sfud/inc;../FlashDB/port/fal/inc;../FlashDB/inc;../FlexibleButton</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2208,6 +2208,26 @@
               <FileType>1</FileType>
               <FilePath>..\user\led_tm1652.c</FilePath>
             </File>
+            <File>
+              <FileName>battery_charging.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\battery_charging.c</FilePath>
+            </File>
+            <File>
+              <FileName>oled_1306.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\oled_1306.c</FilePath>
+            </File>
+            <File>
+              <FileName>oled_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\oled_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>flex_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\flex_button.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2317,6 +2337,16 @@
               <FileName>tsdb_sample.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FlashDB\samples\tsdb_sample.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flex_button</GroupName>
+          <Files>
+            <File>
+              <FileName>flexible_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FlexibleButton\flexible_button.c</FilePath>
             </File>
           </Files>
         </Group>
