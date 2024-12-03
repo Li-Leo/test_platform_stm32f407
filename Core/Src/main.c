@@ -98,7 +98,7 @@ int main(void)
   MX_RTC_Init();
   MX_I2C3_Init();
   /* USER CODE BEGIN 2 */
-  OLED_Init();
+  // OLED_Init();
   /* USER CODE END 2 */
 
   /* Init scheduler */

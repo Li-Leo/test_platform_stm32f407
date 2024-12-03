@@ -5,8 +5,8 @@
  *      Author: hejunlin
  */
 
-#ifndef INC_OLED_H_
-#define INC_OLED_H_
+#ifndef INC_OLED1306_H_
+#define INC_OLED1306_H_
 
 #include <stdint.h>
 #include "oled_data.h"

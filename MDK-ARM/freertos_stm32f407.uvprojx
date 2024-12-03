@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../shell/log;../shell/port;../shell/src;../user/lib;../user;../sfud/inc;../FlashDB/port/fal/inc;../FlashDB/inc;../FlexibleButton</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../shell/log;../shell/port;../shell/src;../user/lib;../user;../sfud/inc;../FlashDB/port/fal/inc;../FlashDB/inc;../FlexibleButton;../user/dinosaur_game;../user/dinosaur_game/tool</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2347,6 +2347,31 @@
               <FileName>flexible_button.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FlexibleButton\flexible_button.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>dino</GroupName>
+          <Files>
+            <File>
+              <FileName>dinosaur.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\dinosaur_game\dinosaur.c</FilePath>
+            </File>
+            <File>
+              <FileName>oled12864.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\dinosaur_game\oled12864.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\dinosaur_game\tool\img_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_data1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\dinosaur_game\tool\img_data1.c</FilePath>
             </File>
           </Files>
         </Group>

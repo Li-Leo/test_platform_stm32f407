@@ -21,7 +21,8 @@
 			"dac.h": "c",
 			"ssz_time_utility.h": "c",
 			"mid_adc.h": "c",
-			"led_tm1652.h": "c"
+			"led_tm1652.h": "c",
+			"oled12864.h": "c"
 		}
 	}
 }

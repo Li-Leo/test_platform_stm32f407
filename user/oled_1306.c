@@ -5,7 +5,7 @@
  *      Author: hejunlin
  */
 #include "main.h"
-#include "oled.h"
+#include "oled_1306.h"
 #include <string.h>
 #include <math.h>
 #include <stdio.h>

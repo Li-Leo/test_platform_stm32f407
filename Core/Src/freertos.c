@@ -95,9 +95,11 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
+  // oled_init();
+  OLED_Init();
   key_init();
   sfud_init();
-  flash_db_init();
+  // flash_db_init();
   userShellInit();
   drv_gpio_set_pin_high(LED2_GPIO_Port, LED2_Pin);
   drv_gpio_set_pin_high(LED1_GPIO_Port, LED1_Pin);
@@ -105,6 +107,9 @@ void MX_FREERTOS_Init(void) {
   key_set_handler(kKey2, kKeyEventPressed, key2_pressed);
   key_set_handler(kKey3, kKeyEventPressed, key3_pressed);
   key_set_handler(kKey4, kKeyEventReleased, key4_released);
+
+  OLED_ShowString(10, 10, "Hello world!", 8);
+  OLED_Update();
 
   /* USER CODE END Init */
 
@@ -138,7 +143,7 @@ void MX_FREERTOS_Init(void) {
   start_thread();
   start_sem_thread();
   start_event_thread();
-  flex_button_main();
+  // flex_button_main();
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -209,6 +214,17 @@ void time(void)
 
   if (HAL_RTC_GetDate(&hrtc, &date_buff, RTC_FORMAT_BIN) == HAL_OK) {
     logDebug("date: %02d/%02d/%02d/%02d", 2000 + date_buff.Year, date_buff.Month, date_buff.Date,date_buff.WeekDay);
+  }
+}
+
+void time_check(void)
+{
+  if (HAL_RTC_GetTime(&hrtc, &ctime, RTC_FORMAT_BIN) == HAL_OK) {
+    // logDebug("time: %02d:%02d:%02d", ctime.Hours, ctime.Minutes, ctime.Seconds);
+  }
+
+  if (HAL_RTC_GetDate(&hrtc, &date_buff, RTC_FORMAT_BIN) == HAL_OK) {
+    // logDebug("date: %02d/%02d/%02d/%02d", 2000 + date_buff.Year, date_buff.Month, date_buff.Date,date_buff.WeekDay);
   }
 }
 
@@ -289,7 +305,7 @@ void click_interval_read(void)
 
 void check_timer_callback(void *parameter)
 {
-  // time();
+  time_check();
 
   if (date_buff.Month == g_expect_datetime.month
       && date_buff.Date == g_expect_datetime.day
