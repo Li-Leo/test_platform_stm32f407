@@ -306,6 +306,20 @@ void OLED_SetCursor(uint8_t Page, uint8_t X)
 	OLED_WriteCommand(0x00 | (X & 0x0F));			//设置X位置低4位
 }
 
+void OLED_SetCursor_ex( uint8_t X, uint8_t Page)
+{
+	/*如果使用此程序驱动1.3寸的OLED显示屏，则需要解除此注释*/
+	/*因为1.3寸的OLED驱动芯片（SH1106）有132列*/
+	/*屏幕的起始列接在了第2列，而不是第0列*/
+	/*所以需要将X加2，才能正常显示*/
+//	X += 2;
+
+	/*通过指令设置页地址和列地址*/
+	OLED_WriteCommand(0xB0 | Page);					//设置页位置
+	OLED_WriteCommand(0x10 | ((X & 0xF0) >> 4));	//设置X位置高4位
+	OLED_WriteCommand(0x00 | (X & 0x0F));			//设置X位置低4位
+}
+
 /*********************硬件配置*/
 
 
@@ -410,6 +424,21 @@ void OLED_Update(void)
 	}
 }
 
+void OLED_clear_ex(void)
+{
+	uint8_t j, i;
+	uint8_t buff[128] = {0};
+	/*遍历每一页*/
+
+	for (j = 0; j < 8; j ++)
+	{
+		/*设置光标位置为每一页的第一列*/
+		OLED_SetCursor(j, 0);
+		/*连续写入128个数据，将显存数组的数据写入到OLED硬件*/
+		OLED_WriteData(buff, 128);
+	}
+}
+
 /**
   * 函    数：将OLED显存数组部分更新到OLED屏幕
   * 参    数：X 指定区域左上角的横坐标，范围：-32768~32767，屏幕区域：0~127
@@ -468,6 +497,7 @@ void OLED_Clear(void)
 			OLED_DisplayBuf[j][i] = 0x00;	//将显存数组数据全部清零
 		}
 	}
+	OLED_clear_ex();
 }
 
 /**
@@ -873,12 +903,28 @@ void OLED_Printf(int16_t X, int16_t Y, uint8_t FontSize, char *format, ...)
   * 返 回 值：无
   * 说    明：调用此函数后，要想真正地呈现在屏幕上，还需调用更新函数
   */
+void OLED_DrawPoint_ex(int X, int Y, unsigned int color)
+{
+	if (X >= 0 && X <= 127 && Y >=0 && Y <= 63)		//超出屏幕的内容不显示
+	{
+		/*将显存数组指定位置的一个Bit数据置1*/
+			OLED_DisplayBuf[Y / 8][X] |= 0x01 << (Y % 8);
+		if (color) {
+		} else {
+			OLED_DisplayBuf[Y / 8][X] &= ~(0x01 << (Y % 8));
+		}
+	}
+}
 void OLED_DrawPoint(int16_t X, int16_t Y)
 {
 	if (X >= 0 && X <= 127 && Y >=0 && Y <= 63)		//超出屏幕的内容不显示
 	{
 		/*将显存数组指定位置的一个Bit数据置1*/
-		OLED_DisplayBuf[Y / 8][X] |= 0x01 << (Y % 8);
+		if (1) {
+			OLED_DisplayBuf[Y / 8][X] |= 0x01 << (Y % 8);
+		} else {
+			OLED_DisplayBuf[Y / 8][X] &= ~(0x01 << (Y % 8));
+		}
 	}
 }
 

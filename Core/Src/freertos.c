@@ -108,7 +108,21 @@ void MX_FREERTOS_Init(void) {
   key_set_handler(kKey3, kKeyEventPressed, key3_pressed);
   key_set_handler(kKey4, kKeyEventReleased, key4_released);
 
-  OLED_ShowString(10, 10, "Hello world!", 8);
+  // OLED_ShowString(10, 10, "Hello world!", 8);
+
+  extern unsigned char GB2312_H12[];
+  for (int i = 0 ; i < 8; i++) {
+    // OLED_ShowImage(6*i, 0, 6,12, &GB2312_H12[i*12]);
+    OLED_ShowImage(6*i, 0, 6,12, &GB2312_H12[i*12]);
+
+  }
+  // OLED_ShowImage(10, 10, 6,12, &GB2312_H12[0]);
+  // OLED_ShowImage(10, 10, 6,12, &GB2312_H12[0]);
+  // OLED_ShowImage(10, 10, 6,12, &GB2312_H12[0]);
+  // OLED_ShowImage(10, 10, 6,12, &GB2312_H12[0]);
+  // OLED_ShowImage(10, 10, 6,12, &GB2312_H12[0]);
+  // OLED_ShowImage(10, 10, 6,12, &GB2312_H12[0]);
+  // OLED_ShowImage(10, 10, 6,12, &GB2312_H12[0]);
   OLED_Update();
 
   /* USER CODE END Init */
@@ -122,8 +136,8 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
-  // osTimerId_t key_scan_timer_id = osTimerNew(key_start_scan, osTimerPeriodic, NULL, NULL);
-  // osTimerStart(key_scan_timer_id, KEY_SCAN_TIME_MS);
+  osTimerId_t key_scan_timer_id = osTimerNew(key_start_scan, osTimerPeriodic, NULL, NULL);
+  osTimerStart(key_scan_timer_id, KEY_SCAN_TIME_MS);
 
   g_check_destination_timer_id = osTimerNew(check_timer_callback, osTimerPeriodic, NULL, NULL);
   osTimerStart(g_check_destination_timer_id, 1000);
@@ -144,6 +158,8 @@ void MX_FREERTOS_Init(void) {
   start_sem_thread();
   start_event_thread();
   // flex_button_main();
+  demo_ui_thread();
+
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */

@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../shell/log;../shell/port;../shell/src;../user/lib;../user;../sfud/inc;../FlashDB/port/fal/inc;../FlashDB/inc;../FlexibleButton;../user/dinosaur_game;../user/dinosaur_game/tool</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../shell/log;../shell/port;../shell/src;../user/lib;../user;../sfud/inc;../FlashDB/port/fal/inc;../FlashDB/inc;../FlexibleButton;../user/dinosaur_game;../user/dinosaur_game/tool;../simple_gui/DemoProc/inc;..\simple_gui\GUI\inc;..\simple_gui\HMI\inc;..\simple_gui\port\BSP\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -387,6 +387,11 @@
               <FileName>startup_stm32f407xx.s</FileName>
               <FileType>2</FileType>
               <FilePath>startup_stm32f407xx.s</FilePath>
+            </File>
+            <File>
+              <FileName>settings_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\settings_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2368,10 +2373,210 @@
               <FileType>1</FileType>
               <FilePath>..\user\dinosaur_game\tool\img_data.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>simple_ui</GroupName>
+          <Files>
             <File>
-              <FileName>img_data1.c</FileName>
+              <FileName>Basic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\user\dinosaur_game\tool\img_data1.c</FilePath>
+              <FilePath>..\simple_gui\DemoProc\src\Basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>Curve.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\Curve.c</FilePath>
+            </File>
+            <File>
+              <FileName>Menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\Menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>Notice.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\Notice.c</FilePath>
+            </File>
+            <File>
+              <FileName>PolarCoordinates.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\PolarCoordinates.c</FilePath>
+            </File>
+            <File>
+              <FileName>RealtimeGraph.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\RealtimeGraph.c</FilePath>
+            </File>
+            <File>
+              <FileName>Resource.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\Resource.c</FilePath>
+            </File>
+            <File>
+              <FileName>Text.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\Text.c</FilePath>
+            </File>
+            <File>
+              <FileName>VariableBox.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\VariableBox.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_Basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_Basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_Common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_Common.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_Curve.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_Curve.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_FontResource.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_FontResource.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_IconResource.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_IconResource.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_Interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_Interface.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_ItemsBase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_ItemsBase.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_List.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_List.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_Menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_Menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_Notice.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_Notice.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_PolarCoordinates.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_PolarCoordinates.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_ProcessBar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_ProcessBar.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_RealtimeGraph.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_RealtimeGraph.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_ScrollBar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_ScrollBar.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_Text.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_Text.c</FilePath>
+            </File>
+            <File>
+              <FileName>SGUI_VariableBox.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\GUI\src\SGUI_VariableBox.c</FilePath>
+            </File>
+            <File>
+              <FileName>HMI_Engine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\HMI\src\HMI_Engine.c</FilePath>
+            </File>
+            <File>
+              <FileName>trigger_flags.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\port\BSP\src\trigger_flags.c</FilePath>
+            </File>
+            <File>
+              <FileName>screen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\port\BSP\src\screen.c</FilePath>
+            </File>
+            <File>
+              <FileName>list_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\list_demo.c</FilePath>
+            </File>
+            <File>
+              <FileName>image_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\image_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>font_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\font_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>dengxian_bold_20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\tools\dengxian_bold_20.c</FilePath>
+            </File>
+            <File>
+              <FileName>dengxian_regular_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\tools\dengxian_regular_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>dengxian_regular_22.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\tools\dengxian_regular_22.c</FilePath>
+            </File>
+            <File>
+              <FileName>inconsolata_regular_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\tools\inconsolata_regular_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lxgw_regular_18.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\tools\lxgw_regular_18.c</FilePath>
+            </File>
+            <File>
+              <FileName>inconsolata_regular_12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\tools\inconsolata_regular_12.c</FilePath>
+            </File>
+            <File>
+              <FileName>extended_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\DemoProc\src\extended_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>screen_proc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\port\DemoProc\src\screen_proc.c</FilePath>
+            </File>
+            <File>
+              <FileName>inconsolata_bold_20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\simple_gui\tools\inconsolata_bold_20.c</FilePath>
             </File>
           </Files>
         </Group>

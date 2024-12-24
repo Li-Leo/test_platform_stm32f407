@@ -185,6 +185,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM10) {
     HAL_IncTick();
+    TimerInterruptProc();
   }
   /* USER CODE BEGIN Callback 1 */
 
